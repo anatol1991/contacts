@@ -3,6 +3,7 @@ import {Platform, StyleSheet, Text, View, Alert, Linking, TouchableOpacity, Dime
 import {Provider} from 'react-redux';
 import ContactList from './src'
 import createStore from './src/config/store';
+import {checkPermission} from './src/config/services'
 
 const {height} = Dimensions.get('window');
 const store = createStore();
@@ -41,7 +42,10 @@ export default class App extends Component {
   }
 
   async componentDidMount() {
-    await this.requestContactsPermission()
+    if(Platform.OS === 'android') {
+      await this.requestContactsPermission()
+    }
+    await checkPermission();
   }
 
   render() {

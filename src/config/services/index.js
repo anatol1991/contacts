@@ -1,7 +1,7 @@
 import Contacts from 'react-native-contacts';
 import { Alert, Linking } from 'react-native'
 
-const openSettings = () => {
+export const openSettings = () => {
   Linking.openURL('app-settings:');
 }
 
@@ -22,7 +22,7 @@ export const checkPermission = () => {
         {
           text: 'Grant Access',
           onPress: () => {
-            this.openSettings();
+            openSettings();
           }
         }
       ])
