@@ -3,7 +3,7 @@ import {Platform, StyleSheet, Text, View, Alert, Linking, TouchableOpacity, Dime
 import {Provider} from 'react-redux';
 import ContactList from './src'
 import createStore from './src/config/store';
-import {checkPermission, requestAndroidPermission} from './src/config/services'
+import {checkPermission, requestAndroidPermission, permissionAction} from './src/config/services'
 
 const {height} = Dimensions.get('window');
 const store = createStore();
@@ -11,22 +11,36 @@ const store = createStore();
 export default class App extends Component {
   constructor() {
     super();
+    this.state = {
+      grant: false
+    }
   }
 
   async componentDidMount() {
     if(Platform.OS === 'android') {
-      await requestAndroidPermission()
+      let request = await requestAndroidPermission();
+      while (request === 'denied') {
+        request = await requestAndroidPermission();
+      }
+      request === 'granted' && this.setState({grant: true})
+    } else {
+      let request = await checkPermission();
+      if (request === 'denied' || !request) {
+        request = await checkPermission();
+      }
+      request === 'authorized' && this.setState({grant: true})
     }
-    await checkPermission();
   }
 
   render() {
     return (
-      <Provider store={store}>
-        <View style={styles.container}>
-          <ContactList />
-        </View>
-      </Provider>
+      !this.state.grant ?
+        <Text onPress={permissionAction} style={styles.permissions}>Accept permissions</Text> :
+        <Provider store={store}>
+          <View style={styles.container}>
+            <ContactList />
+          </View>
+        </Provider>
     );
   }
 }
@@ -39,14 +53,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
     paddingTop: height/25
   },
-  welcome: {
-    fontSize: 20,
+  permissions: {
     textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+    fontSize: 18,
+    color: '#767676',
+    marginTop: height/20
+  }
 });

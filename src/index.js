@@ -49,7 +49,7 @@ class ContactList extends React.Component {
     let searchHasResults = !!searching && search.length > 0;
     let allHasResults = !searching && !!all && all.length > 0;
     return (
-      <View style={[styles.wrapper, {paddingBottom: this.state.padding + 46}]}>
+      <View style={[styles.wrapper, {paddingBottom: Platform.OS === 'ios' ? this.state.padding + 46 : 50}]}>
         {
           searchNoResults ?
             <Text style={styles.noResults}>No results found</Text> :
