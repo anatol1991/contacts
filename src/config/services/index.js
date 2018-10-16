@@ -1,5 +1,5 @@
 import Contacts from 'react-native-contacts';
-import { Alert, Linking, PermissionsAndroid, Platform } from 'react-native'
+import { Alert, Linking, PermissionsAndroid } from 'react-native'
 
 export const openSettings = () => {
   Linking.openURL('app-settings:');

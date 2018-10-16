@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, Alert, Linking, TouchableOpacity, Dimensions, PermissionsAndroid} from 'react-native';
+import {Platform, StyleSheet, Text, View, Dimensions} from 'react-native';
 import {Provider} from 'react-redux';
 import ContactList from './src'
 import createStore from './src/config/store';

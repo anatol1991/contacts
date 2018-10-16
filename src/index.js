@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {View, FlatList, TextInput, Keyboard, StyleSheet, Text, Dimensions, Platform, BackHandler} from 'react-native';
-import Contacts from 'react-native-contacts';
 import {getAllContacts, searchContacts, clearSearch} from './config/actions'
 import ContactItem from './ContactItem.js';
 
